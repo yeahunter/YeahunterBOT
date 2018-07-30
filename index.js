@@ -42,3 +42,21 @@ client.on("message", function (channel, userstate, message, self) {
             break;
     }
 });
+
+function getViewerList() {
+    client.api({
+        url: "https://tmi.twitch.tv/group/user/" + config.channels[0].replace('#', '') + "/chatters",
+    }, function(err, res, body) {
+        var viewers = [];
+        if(body.hasOwnProperty('chatters')) {
+            viewers = Array.prototype.concat.apply([], Object.values(body.chatters));
+            // console.log(viewers.length);
+            // TODO: Mennyi ideje neznek a viewers-ek
+        } else {
+            console.log('Baj van!')
+        }
+    });
+}
+
+var timer = setInterval(getViewerList, 60000);
+getViewerList();

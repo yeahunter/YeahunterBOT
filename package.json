@@ -1,0 +1,22 @@
+{
+  "name": "yeahunterbot",
+  "version": "1.0.0",
+  "description": "Csatlakozok a Ticcsre, es feldolgozom amit ott irnak!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeahunter/YeahunterBOT.git"
+  },
+  "author": "Yeahunter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yeahunter/YeahunterBOT/issues"
+  },
+  "homepage": "https://github.com/yeahunter/YeahunterBOT#readme",
+  "dependencies": {
+    "tmi.js": "^1.2.1"
+  }
+}

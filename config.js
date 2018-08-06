@@ -4,5 +4,8 @@ module.exports = {
     channels: [process.env.TWITCH_CHANNEL || '#yeahunter'],
     twitchApi: {
         clientId: process.env.TWITCH_API_CLIENTID || 'lajos'
+    },
+    yeahunterApi: {
+        url: process.env.YEAHUNTER_API_URL || 'http://localhost:8080'
     }
 };

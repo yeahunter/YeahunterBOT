@@ -1,3 +1,6 @@
+const axios = require("axios");
+const config = require("./config");
+
 module.exports = class Viewer {
     constructor(viewer) {
         this.viewer = viewer;
@@ -11,8 +14,17 @@ module.exports = class Viewer {
         this.count++;
 
         if (this.count > this.limit) {
-            // TODO: ITT API HIVAS FOG TORTENNI
-            this.count = 0;
+            var _this = this;
+
+            axios.post(config.yeahunterApi.url + '/watchtime', {
+                viewer: this.viewer
+            })
+            .then(function(response) {
+                _this.count = 0;
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
         }
     }
 }

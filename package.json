@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yeahunter/YeahunterBOT#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "tmi.js": "^1.2.1"
   }
 }

@@ -1,3 +1,4 @@
+var Viewer = require("./viewer.js");
 var tmi = require("tmi.js");
 var config = require("./config");
 
@@ -17,6 +18,7 @@ var options = {
 };
 
 var client = new tmi.client(options);
+var viewers = {};
 
 client.connect();
 
@@ -47,11 +49,26 @@ function getViewerList() {
     client.api({
         url: "https://tmi.twitch.tv/group/user/" + config.channels[0].replace('#', '') + "/chatters",
     }, function(err, res, body) {
-        var viewers = [];
+        var currentViewers = [];
         if(body.hasOwnProperty('chatters')) {
-            viewers = Array.prototype.concat.apply([], Object.values(body.chatters));
-            // console.log(viewers.length);
-            // TODO: Mennyi ideje neznek a viewers-ek
+            // Osszefuzzuk a moderatorokat, a globalmodokat, es a tobbieket egy tombbe
+            currentViewers = Array.prototype.concat.apply([], Object.values(body.chatters));
+
+            // A tarolt nezok kozul, kitoroljuk azokat, akik a lekerdezett nezok kozott mar nincsenek ott
+            Object.keys(viewers).map(function(viewersKey, index) {
+                if(!currentViewers.includes(viewersKey)) {
+                    delete viewers[viewersKey];
+                }
+            });
+            
+            currentViewers.forEach(currentViewer => {
+                // Feltoljuk a nezok "listajat" uj nezokkel
+                if (!viewers.hasOwnProperty(currentViewer)) {
+                    viewers[currentViewer] = new Viewer(currentViewer);
+                } else {
+                    viewers[currentViewer].check();
+                }
+            });
         } else {
             console.log('Baj van!')
         }

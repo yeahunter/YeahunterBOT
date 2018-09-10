@@ -1,6 +1,7 @@
 var Viewer = require("./viewer.js");
 var tmi = require("tmi.js");
 var config = require("./config");
+var commands = require("./commands");
 
 
 var options = {
@@ -36,6 +37,10 @@ client.on("message", function (channel, userstate, message, self) {
             }); 
             break;
         case "chat":
+            // Figyeljuk a parancsokat
+            if(message[0] == "!") {
+                commands(client, channel, userstate, message);
+            }
             break;
         case "whisper":
             break;
